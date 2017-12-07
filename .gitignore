@@ -1,3 +1,4 @@
 dips_user_service/__pycache__/
 user_service/__pycache__/
 user_service/migrations/__pycache__/
+user_service/tests/__pycache__/
