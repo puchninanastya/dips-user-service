@@ -3,3 +3,4 @@ user_service/__pycache__/
 user_service/migrations/__pycache__/
 user_service/tests/__pycache__/
 htmlcov/
+.coverage
