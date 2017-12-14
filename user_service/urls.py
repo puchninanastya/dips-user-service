@@ -1,9 +1,14 @@
 from django.conf.urls import url, include
+from rest_framework.routers import DefaultRouter
 from . import views
 
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'profiles', views.ProfileViewSet)
+
+# The API URLs are now determined automatically by the router.
+# Additionally, we include the login URLs for the browsable API.
 urlpatterns = [
-    url(r'^users/$', views.UserList.as_view(), name='user-list'),
-    url(r'^users/(?P<id>[0-9]+)/$', views.UserDetail.as_view(), name='user-detail'),
-    url(r'^profiles/$', views.ProfileList.as_view(), name='profile-list'),
-    url(r'^profiles/(?P<id>[0-9]+)/$', views.ProfileDetail.as_view(), name='profile-detail'),
+    url(r'^', include(router.urls)),
 ]
