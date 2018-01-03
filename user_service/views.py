@@ -7,8 +7,6 @@ from .serializers import UserSerializer, ProfileSerializer
 from django.contrib.auth.models import User
 from .models import Profile
 
-#TODO: Create tests for views
-
 class UserViewSet(mixins.ListModelMixin,
                      mixins.CreateModelMixin,
                      mixins.RetrieveModelMixin,
