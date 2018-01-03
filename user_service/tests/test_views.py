@@ -35,7 +35,7 @@ class GetAllUsersTestCase(TestCase):
             phone_number='+79161002033', birth_date='1997-03-03')
 
     def test_get_all_users(self):
-        """Test the api get valid single user."""
+        """Test the api get users."""
         # Setup.
         url = "/users/"
         request = self.factory.get(url)
