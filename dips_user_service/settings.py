@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1d02_cwdcm!xl)ydv$du!8%^j5b_fu37r_dyx%l8v4v-@pg3!x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -49,6 +49,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    #'user_service.utils.CustomExceptionHandler'
 ]
 
 ROOT_URLCONF = 'dips_user_service.urls'
@@ -126,5 +128,6 @@ STATIC_URL = '/static/'
 # http://www.django-rest-framework.org
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 5
+    'PAGE_SIZE': 5,
+    'EXCEPTION_HANDLER': 'user_service.utils.custom_exception_handler'
 }
