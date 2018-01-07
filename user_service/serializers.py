@@ -9,7 +9,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         depth = 0
-        fields = ('id', 'phone_number', 'birth_date')
+        fields = ('id', 'phone_number', 'birth_date',
+            'height', 'bust', 'waist', 'hips', 'shoe',
+            'eyes', 'hair')
 
 class UserSerializer(serializers.ModelSerializer):
     #profile_id = serializers.ReadOnlyField(source='profile.id')
