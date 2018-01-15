@@ -21,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
     #birth_date = serializers.DateField(source='profile.birth_date')
     class Meta:
         model = User
-        fields = ('id', 'email', 'username', 'first_name', 'last_name', 'password',
+        fields = ('id', 'email', 'username', 'first_name', 'last_name',
             'profile')
 
     def create(self, validated_data):

@@ -17,7 +17,7 @@ class UserViewSet(mixins.ListModelMixin,
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     """
-    queryset = User.objects.all()
+    queryset = User.objects.filter(is_staff=False)
     serializer_class = UserSerializer
 
 
