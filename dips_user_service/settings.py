@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1d02_cwdcm!xl)ydv$du!8%^j5b_fu37r_dyx%l8v4v-@pg3!x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'user_service',
+    'oauth2_provider'
 ]
 
 MIDDLEWARE = [
@@ -129,5 +130,5 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 5,
-    'EXCEPTION_HANDLER': 'user_service.utils.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'user_service.utils.custom_exception_handler',
 }
