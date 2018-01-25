@@ -5,7 +5,6 @@ from .models import Profile
 
 class ProfileSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(source='pk', read_only=True)
-    #username = serializers.CharField(source='user.username', read_only=True)
     class Meta:
         model = Profile
         depth = 0
@@ -14,23 +13,24 @@ class ProfileSerializer(serializers.ModelSerializer):
             'eyes', 'hair')
 
 class UserSerializer(serializers.ModelSerializer):
-    #profile_id = serializers.ReadOnlyField(source='profile.id')
     id = serializers.IntegerField(source='pk', read_only=True)
+    password = serializers.CharField(write_only=True)
     profile = ProfileSerializer()
-    #phone_number = serializers.CharField(source='profile.phone_number')
-    #birth_date = serializers.DateField(source='profile.birth_date')
     class Meta:
         model = User
         fields = ('id', 'email', 'username', 'first_name', 'last_name',
-            'profile')
+            'profile', 'password')
 
     def create(self, validated_data):
         profile_data = validated_data.pop('profile')
         user = User.objects.create(**validated_data)
-        #if user is not None:
-            #password = validated_data.get('password', None)
-            #if password is not None:
-                #user.set_password(password)
+        if user is not None:
+            password = validated_data.get('password', None)
+            if password is not None:
+                print('password is not none')
+                user.set_password(password)
+            else:
+                print('pw id none')
         user.save()
         Profile.objects.create(user=user, **profile_data)
         return user
