@@ -11,7 +11,7 @@ router.register(r'profiles', views.ProfileViewSet)
 # Additionally, we include the login URLs for the browsable API.
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^user-token-auth/check$', views.UserTokenCheckView.as_view(), name='check-user-token'),
-    url(r'^user-token-auth/$', views.UserTokenView.as_view(), name='create-user-token'),
-    url(r'^app-token-auth/$', views.AppTokenView.as_view(), name='create-app-token'),
+    url(r'^user-auth-token/check$', views.UserTokenCheckView.as_view(), name='check-user-token'),
+    url(r'^user-auth-token/$', views.UserTokenView.as_view(), name='create-user-token'),
+    url(r'^app-auth-token/$', views.AppTokenView.as_view(), name='create-app-token'),
 ]

@@ -39,11 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'user_service',
-    'oauth2_provider'
+    'oauth2_provider',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -125,10 +127,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-# DJANGO REST FRAMEWORK SETTINGS
+# Django Rest Framework Settings
 # http://www.django-rest-framework.org
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 5,
     'EXCEPTION_HANDLER': 'user_service.utils.custom_exception_handler',
 }
+
+# Cross-Origin Request Sharing settings
+CORS_ORIGIN_ALLOW_ALL = True
