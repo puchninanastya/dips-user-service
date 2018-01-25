@@ -24,41 +24,35 @@ class UserTokenView(APIView):
         password = request.data.get('password', None)
         if (username is None or password is None):
             return Response({'error': 'Need username and password data'}, status=400)
-        auth_user = authenticate(username=username, password=password)
-        if auth_user is None:
-            print('auth not ok')
+        user = authenticate(username=username, password=password)
+        if user is None:
             return Response(status=status.HTTP_403_FORBIDDEN)
         else:
-            print('auth is ok')
             new_token = binascii.hexlify(os.urandom(15)).decode('ascii')
-            print(new_token)
             tok, created = UserToken.objects.update_or_create(
-                user=auth_user,
+                user=user,
                 defaults={
-                    'user': auth_user,
+                    'user': user,
                     'token': new_token,
-                    'expires': timezone.now() + timezone.timedelta(minutes=1)},
+                    'expires': timezone.now() + timezone.timedelta(minutes=5)},
             )
-            print('tok is')
-            print(tok)
-            print('created is')
-            print(created)
             return Response({'token': new_token})
 
 
 class UserTokenCheckView(APIView):
+    authentication_classes = (AppTokenAuthentication, )
+
     def post(self, request):
         username = request.data['username']
         token = request.data['token']
-        user = authenticate(username=username, password=password)
         try:
-            tok = Token.objects.get(client_id=clientId, client_secret=clientSecret)
-        except Token.DoesNotExist:
+            tok = UserToken.objects.get(token=token, user__username=username)
+        except UserToken.DoesNotExist:
             return Response(status=401)
         if tok.expires < timezone.now():
             return Response(status=401)
         else:
-            tok.expires = timezone.now() + timezone.timedelta(minutes=1)
+            tok.expires = timezone.now() + timezone.timedelta(minutes=5)
             tok.save()
             return Response(status=200)
 
@@ -72,7 +66,7 @@ class AppTokenView(APIView):
             return Response(status=status.HTTP_403_FORBIDDEN)
         new_token = binascii.hexlify(os.urandom(15)).decode('ascii')
         tok.token = new_token
-        tok.expires = timezone.now() + timezone.timedelta(minutes=1)
+        tok.expires = timezone.now() + timezone.timedelta(minutes=5)
         tok.save()
         return Response({'token': new_token})
 
@@ -88,6 +82,7 @@ class UserViewSet(mixins.ListModelMixin,
     """
     queryset = User.objects.filter(is_staff=False)
     serializer_class = UserSerializer
+    authentication_classes = (AppTokenAuthentication, )
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
@@ -96,3 +91,4 @@ class ProfileViewSet(viewsets.ModelViewSet):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    authentication_classes = (AppTokenAuthentication, )
